@@ -11,3 +11,12 @@ show a list of products? 1-10, 10- 20, 20 - 30, 30- 40, 40 - 50 ? (How many?)
 Which product do you want to learn more about?
 
 1. ...
+
+What is a deal?
+
+A deal has a name
+A deal has a price
+A deal has a discount
+A deal has a url
+A deal has an availability
+A deal also has a vendor? 
