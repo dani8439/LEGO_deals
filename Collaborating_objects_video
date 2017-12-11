@@ -1,0 +1,129 @@
+From Collaborating Objects: Building a CLI Scraper Gem from Models to CLI Lecture.
+
+--rubyweekly_controller.rb
+class RubyWeeklyController
+
+  def initialize
+    puts "Welcome to RubyWeekly!!!"
+
+    s = RubyWeeklyScraper.new(286)
+    @newsletter = s.scrape
+  end
+
+  def call
+    input = ""
+    while input != "exit"
+      puts "What would you like to do?"
+      input = gets.strip
+      case input
+      when "list"
+        list_articles
+      when "exit"
+        puts "Goodbye"
+        break
+      else
+        system("open #{@newsletter.articles[input.to_i-1].url}") <-- opens link of article
+      end
+    end
+  end
+
+  def list_articles
+    @newsletter.articles.each.with_index(1) do |a, i|
+      puts "#{i}. #{a.title}"
+    end
+  end
+end
+
+-- rubyweekly_scraper.rb
+class RubyWeeklyScraper
+  attr_accessor :newsletter, :doc
+
+  def initialize(issue_number)
+    @newsletter = Newsletter.new
+    @newsletter.issue_number = issue_number
+    @doc = Nokogiri::HTML(open("http://rubyweekly.com/issues/"#{issue_number}"))
+  end
+
+  def scrape
+    scrape_details
+    scrape_articles
+    @newsletter #=> This instance should have a bunch of articles and details
+  end
+
+  def scrape_details
+    #populate @newsletter with more data from the newsletter site
+    @newsletter.issue_date = @doc.search("table.gowide.lonmo").text.strip.gsub("Issue #{@issue_number} — ", "").strip
+  end
+
+  def scrape_articles
+    #I would break the convention of only knowing about the Newsletter and let it create articles
+    @doc.search("td[alighn='left'] table.gowide")[2..-1].each do |article_table|
+      #instantiate the article
+      a = Article.new
+      a.author = article_table.search("div:first").text.strip
+      a.title = article_table.search("a:first").text.strip
+      a.url = article_table.search("a:first").attr("href").text.strip
+
+      @newsletter.add_article(a)
+      #scrape the date
+      #add the article to the newsletter
+    end
+  end
+end
+
+--article.rb
+class Article
+  attr_accessor :author, :url, :title
+end
+
+--rakefile
+require_relative './config.environment'
+
+def reload!
+  load_all './lib'
+end
+
+task :console do
+  Pry.start
+end
+
+--config environment
+require 'bundler'
+
+Bundler.require
+require 'open-uri'
+
+require_all './lib'
+
+-- newsletter.rb
+class InvalidType < StandardError; end
+
+class Newsletter
+  attr_accessor :issue_number, :issue_date
+  #attr_reader :articles
+
+  def initialize
+    @articles = []
+  end
+
+  def articles
+    @articles.dup.freeze
+  end
+
+  def add_articles(article)
+    if !article.is_a?(Article)
+      raise InvalidType, "must be an Article"
+    else
+      @articles << article
+    end
+  end
+end
+
+--gemfile
+
+source "https://rubygems.org"
+
+gem 'rake'
+gem 'pry'
+gem 'require_all'
+gem 'nokogiri'
