@@ -3,7 +3,7 @@
 user types in LEGO_deals
 show a list of vendors? - Amazon - Bricklink - Chowren - LEGO - Walmart
 Which vendor would you like to choose?
-show a list of products? 1-10, 10- 20,
+show a list of products? 1-10, 10- 20, 20 - 30, 30- 40, 40 - 50 ? (How many?)
 1. Police Starter Set - $5.59 - 44% Discount - SOLD OUT AT SHOP.LEGO.COM on 25 Nov 2017
 2. Sergeant Jyn Erso - $14.20 - 43% Discount
 3. Harley Quinn to the Rescue - $17.49 - 43% Discount

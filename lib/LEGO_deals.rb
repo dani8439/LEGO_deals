@@ -1,5 +1,4 @@
-require "LEGO_deals/version"
+require_relative "LEGO_deals/version"
+require_relative "./LEGO_deals/CLI"
 
-module LEGODeals
-  # Your code goes here...
-end
+

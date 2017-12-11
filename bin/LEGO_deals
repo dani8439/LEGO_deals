@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
 
+require './lib/LEGO_deals'
 
-puts "Hello World!"
+LEGODeals::CLI.new.call
+
