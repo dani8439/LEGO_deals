@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-require './lib/LEGO_deals'
+require "bundler/setup"
+require "LEGO_deals"
 
 LEGODeals::CLI.new.call
 
