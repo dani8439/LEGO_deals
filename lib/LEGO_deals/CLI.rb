@@ -21,7 +21,8 @@ class LEGODeals::CLI
       input = gets.strip.downcase
 
       if input.to_i > 0
-        puts @deals[input.to_i-1]
+        the_deal = @deals[input.to_i-1]
+        puts "#{the_deal.name} - #{the_deal.price} - #{the_deal.pieces} - #{the_deal.availability}"
       elsif input == "list"
         list_deals
       else
