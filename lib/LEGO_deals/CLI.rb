@@ -21,7 +21,9 @@ class LEGODeals::CLI
     puts "Today's Biggest Discounts:"
     @deals = LEGODeals::Deal.today
     @deals.each.with_index(1) do |deal, i|
-      puts "#{i}. #{deal.name} - #{deal.price} - #{deal.pieces} - #{deal.availability}"
+      if i < 11
+        puts "#{i}. #{deal.name} - #{deal.price} - #{deal.pieces}"
+      end
     end
   end
 
@@ -32,27 +34,21 @@ class LEGODeals::CLI
       input = gets.strip.downcase
 
       if input == "1"
+        list_deals
       elsif input == "2"
+        list_deals
       elsif input == "3"
+        list_deals
       elsif input == "4"
+        list_deals
       elsif input == "5"
-        
-      case input
-      when "1"
-        puts "More info on Amazon Deals..."
-      when "2"
-        puts "More info on Bricklink Deals..."
-      when "3"
-        puts "More info on Chowren Toys Deals..."
-      when "4"
-        puts "More info on LEGO Shop at Home deals..."
-      when "5"
-        puts "More info on Walmart Deals..."
-      when "list"
-        list_vendors
+        list_deals
+      else
+        puts "Not sure what you want, type list or exit."
       end
     end
   end
+
 
   def menu_2
     input = nil
