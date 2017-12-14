@@ -11,12 +11,12 @@ class LEGODeals::Deal
   def self.scrape_deals
     deals = []
     @doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/xml/vendor-Amazon"))
-    @doc.search("td.textcenter.hideonsmallscreen").each do |sale|
+    @doc.search("td.textcenter").each do |sale|
       deal = LEGODeals::Deal.new
       deal.name = sale.search("div.highslide-caption h1").text
       deal.price = sale.search("span.price a").text
-      deal.discount = sale.search("td.disc").text
-      deal.pieces = sale.search("span.meta").text
+      deal.discount = sale.search(".neattable td.disc").text
+      deal.pieces = sale.search("span.meta").text.gsub(/[()]/, "")
 
       deals << deal
     end

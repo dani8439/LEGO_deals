@@ -1,9 +1,15 @@
 class LEGODeals::CLI
 
   def call
+    list_vendors
     list_deals
     menu
     goodbye
+  end
+
+  def list_vendors
+    puts "Welcome to LEGO Deals!"
+    
   end
 
   def list_deals
