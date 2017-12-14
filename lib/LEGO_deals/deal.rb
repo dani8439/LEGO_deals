@@ -1,39 +1,46 @@
 class LEGODeals::Deal
 
-  attr_accessor :name, :price, :discount, :availability, :url, :pieces,
+  attr_accessor :name, :price, :discount, :pieces,
+      # :availability, :url
 
   def self.today
     #Scrape Bricklink and then return deals based on that data
     self.scrape_deals
   end
 
-  # def self.scrape_deals
-  #   deals = []
-  #
-  #   deals << self.scrape_bricklink
-  #   # Go to bricklink, find the product
-  #   # extract the properties
-  #   # instantiate a deal
-  #
-  #   deals
-  # end
-
   def self.scrape_deals
-    doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/xml/vendor-Amazon"))  #{vendor}
     deals = []
+    @doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/xml/vendor-Amazon"))
+    @doc.search("td.textcenter.hideonsmallscreen").each do |sale|
+      deal = LEGODeals::Deal.new
+      deal.name = sale.search("div.highslide-caption h1").text
+      deal.price = sale.search("span.price a").text
+      deal.discount = sale.search("td.disc").text
+      deal.pieces = sale.search("span.meta").text
 
-    doc.search.each do |sale|
-      deal = Deal.new
-      deal.name = sale.search("h3 a").text,
-      deal.price = sale.search("span.price a").text,
-      deal.discount = sale.search("td.disc").text,
-      deal.pieces = sale.search("span.meta").text,
-      deal.availability = sale.search("span.meta.block").text,
-      deal.url = sale.search("h3 a").first.attr("href")
       deals << deal
     end
+
+  #
+  #   deals << self.scrape_bricklink
+  # #   # Go to bricklink, find the product
+  # #   # extract the properties
+  # #   # instantiate a deal
+  #
     deals
   end
+
+  # def self.scrape_bricklink
+  #   doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/xml/vendor-Amazon"))  #{vendor}
+  #   name = doc.search("h3 a").text,
+  #   price = doc.search("span.price a").text
+  #   discount = doc.search("td.disc").text
+  #   # pieces = doc.search("span.meta").text
+  #   # availability = doc.search("span.meta.block").text
+  #   # url = doc.search("h3 a").first.attr("href")
+  # end
+
+
 
 end
 
