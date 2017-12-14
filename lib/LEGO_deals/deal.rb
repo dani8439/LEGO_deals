@@ -20,7 +20,12 @@ class LEGODeals::Deal
 
   def self.scrape_bricklink
     doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/xml/vendor-Amazon"))
-    binding.pry
+    name = doc.search("h3 a").text
+    price = doc.search("span.price a").text
+    discount = doc.search("td.disc").text
+    pieces = doc.search("span.meta").text
+    availability = doc.search("span.meta.block").text
+
   end
 
 end
