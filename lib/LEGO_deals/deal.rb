@@ -7,25 +7,32 @@ class LEGODeals::Deal
     self.scrape_deals
   end
 
+  # def self.scrape_deals
+  #   deals = []
+  #
+  #   deals << self.scrape_bricklink
+  #   # Go to bricklink, find the product
+  #   # extract the properties
+  #   # instantiate a deal
+  #
+  #   deals
+  # end
+
   def self.scrape_deals
+    doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/xml/vendor-Amazon"))  #{vendor}
     deals = []
 
-    deals << self.scrape_bricklink
-    # Go to bricklink, find the product
-    # extract the properties
-    # instantiate a deal
-
+    doc.search.each do |sale|
+      deal = Deal.new
+      deal.name = sale.search("h3 a").text,
+      deal.price = sale.search("span.price a").text,
+      deal.discount = sale.search("td.disc").text,
+      deal.pieces = sale.search("span.meta").text,
+      deal.availability = sale.search("span.meta.block").text,
+      deal.url = sale.search("h3 a").first.attr("href")
+      deals << deal
+    end
     deals
-  end
-
-  def self.scrape_bricklink
-    doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/xml/vendor-Amazon"))
-    name = doc.search("h3 a").text
-    price = doc.search("span.price a").text
-    discount = doc.search("td.disc").text
-    pieces = doc.search("span.meta").text
-    availability = doc.search("span.meta.block").text
-
   end
 
 end
