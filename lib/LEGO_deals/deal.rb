@@ -1,6 +1,6 @@
 class LEGODeals::Deal
 
-  attr_accessor :name, :price, :discount, :pieces,
+  attr_accessor :name, :price, :discount, :pieces, :availability, :url
       # :availability, :url
 
   def self.today

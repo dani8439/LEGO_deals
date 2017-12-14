@@ -3,7 +3,7 @@ class LEGODeals::CLI
   def call
     list_vendors
     menu_1
-    # list_deals
+    list_deals
     menu_2
     goodbye
   end
@@ -27,9 +27,16 @@ class LEGODeals::CLI
 
   def menu_1
     input = nil
-    puts "Please choose a vendor from the list:"
     while input != "exit"
-      input = gets.strip
+      puts "Please choose a vendor from the list:"
+      input = gets.strip.downcase
+
+      if input == "1"
+      elsif input == "2"
+      elsif input == "3"
+      elsif input == "4"
+      elsif input == "5"
+        
       case input
       when "1"
         puts "More info on Amazon Deals..."
@@ -41,6 +48,8 @@ class LEGODeals::CLI
         puts "More info on LEGO Shop at Home deals..."
       when "5"
         puts "More info on Walmart Deals..."
+      when "list"
+        list_vendors
       end
     end
   end
