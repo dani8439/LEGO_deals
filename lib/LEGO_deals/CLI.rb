@@ -22,7 +22,7 @@ class LEGODeals::CLI
     puts "-----------------------------"
     @deals = LEGODeals::Deal.today
     @deals.each.with_index(1) do |deal, i|
-      if i < 30
+      if i.to_i < 30
         puts "#{i}. #{deal.name} #{deal.price} #{deal.pieces}"
       end
     end
@@ -63,7 +63,7 @@ class LEGODeals::CLI
       puts "Enter the number of the item you would like more info on, or type list to see the deals again, or exit:"
       input = gets.strip.downcase
 
-      if input.to_i > 0
+      if input.to_i > 0 && input.to_i < 25
         the_deal = @deals[input.to_i-1]
         # puts "#{the_deal.name} - #{the_deal.price} - #{the_deal.pieces} - #{the_deal.availability}"
       elsif input == "list"

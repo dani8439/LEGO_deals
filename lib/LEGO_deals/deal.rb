@@ -8,6 +8,12 @@ class LEGODeals::Deal
     self.scrape_deals
   end
 
+  def self.scrape_lego
+    deals = []
+    doc = Nokogiri::HTML(open("https://shop.lego.com/en-US/New-Sets"))
+    name = doc.search("h2.product-leaf__title span.markup").text
+  end
+
   def self.scrape_deals
     deals = []
     @doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/xml/vendor-Amazon"))
@@ -15,7 +21,7 @@ class LEGODeals::Deal
       deal = LEGODeals::Deal.new
       deal.name = sale.search("div.highslide-caption h1").text
       deal.price = sale.search("span.price a").text
-      deal.discount = sale.search("disc").text
+      deal.discount = sale.search("table.neattable tbody tr td.disc").text
       deal.pieces = sale.search("span.meta").text.gsub(/[()]/, "")
 
       deals << deal
