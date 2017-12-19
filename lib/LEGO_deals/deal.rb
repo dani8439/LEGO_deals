@@ -1,28 +1,42 @@
 class LEGODeals::Deal
 
-  attr_accessor :name, :price, :discount, :pieces, :availability, :url
+  attr_accessor :name, :price, :theme, :set_number, :discount, :pieces, :availability, :url
       # :availability, :url
+
+  @@all = []
+
+  def initialize(name = nil, price = nil, theme = nil, set_number = nil, discount = nil, pieces = nil, availability = nil, url = nil)
+    @name = name
+    @price = price
+    @theme = theme
+    @set_number = set_number
+    @discount = discount
+    @pieces = pieces
+    @availability = availability
+    @url = url
+    @@all << self
+  end
+
+  def self.all
+    @@all
+  end
 
   def self.today
     #Scrape Bricklink and then return deals based on that data
     self.scrape_deals
   end
 
-  def self.scrape_lego
-    deals = []
-    doc = Nokogiri::HTML(open("https://shop.lego.com/en-US/New-Sets"))
-    name = doc.search("h2.product-leaf__title span.markup").text
-  end
 
   def self.scrape_deals
     deals = []
-    @doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/xml/vendor-Amazon"))
-    @doc.search("td.textcenter").each do |sale|
+    @doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/vendor-Amazon"))
+    @doc.search("table.neattable").each do |sale|
       deal = LEGODeals::Deal.new
       deal.name = sale.search("div.highslide-caption h1").text
       deal.price = sale.search("span.price a").text
-      deal.discount = sale.search("table.neattable tbody tr td.disc").text
+      deal.discount = sale.search("section.main table.neattable tbody tr td.disc").text
       deal.pieces = sale.search("span.meta").text.gsub(/[()]/, "")
+      # deal.url = sale.search("")
 
       deals << deal
     end

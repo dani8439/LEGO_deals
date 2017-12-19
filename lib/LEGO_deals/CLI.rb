@@ -1,63 +1,31 @@
 class LEGODeals::CLI
 
   def call
-    list_vendors
-    menu_1
+    # list_vendors
+    # menu_1
     list_deals
-    menu_2
+    menu
     goodbye
-  end
-
-  def list_vendors
-    vendors = ["Amazon", "Bricklink", "Chowren Toys", "LEGO Shop", "Walmart"]
-    puts "Welcome to LEGO Deals!"
-    vendors.each.with_index(1) do |store, i|
-      puts "#{i}. #{store}"
-    end
   end
 
 
   def list_deals
-    puts "Today's 10 Biggest Discounts:"
-    puts "-----------------------------"
+    puts "Welcome to LEGO Deals!"
+    sleep(1)
+    puts "Here are today's Biggest Discounts:"
+    puts "-----------------------------------"
+    sleep(1)
     @deals = LEGODeals::Deal.today
     @deals.each.with_index(1) do |deal, i|
       if i.to_i < 30
-        puts "#{i}. #{deal.name} #{deal.price} #{deal.pieces}"
+        puts "#{i}. #{deal.name} #{deal.price}"
       end
     end
-    menu_2
-  end
-
-  def menu_1
-    input = nil
-    while input != "exit"
-      puts "Please choose a vendor from the list:"
-      input = gets.strip.downcase
-
-      if input == "1"
-        list_deals
-        # list_deals("Amazon")?
-      elsif input == "2"
-        list_deals
-        # list_deals("Bricklink")
-      elsif input == "3"
-        list_deals
-        # list_deals("Chowren Toys")
-      elsif input == "4"
-        list_deals
-        # list_deals("LEGO")
-      elsif input == "5"
-        list_deals
-        # list_deals("Walmart")
-      else
-        puts "Not sure what you want, type list or exit."
-      end
-    end
+    menu
   end
 
 
-  def menu_2
+  def menu
     input = nil
     while input != "exit"
       puts "Enter the number of the item you would like more info on, or type list to see the deals again, or exit:"
@@ -78,3 +46,39 @@ class LEGODeals::CLI
     puts "See you tomorrow for more deals!"
   end
 end
+
+
+  # def list_vendors
+  #   vendors = ["Amazon", "Bricklink", "Chowren Toys", "LEGO Shop", "Walmart"]
+  #   puts "Welcome to LEGO Deals!"
+  #   vendors.each.with_index(1) do |store, i|
+  #     puts "#{i}. #{store}"
+  #   end
+  # end
+
+  # def menu_1
+  #   input = nil
+  #   while input != "exit"
+  #     puts "Please choose a vendor from the list:"
+  #     input = gets.strip.downcase
+  #
+  #     if input == "1"
+  #       list_deals
+  #       # list_deals("Amazon")?
+  #     elsif input == "2"
+  #       list_deals
+  #       # list_deals("Bricklink")
+  #     elsif input == "3"
+  #       list_deals
+  #       # list_deals("Chowren Toys")
+  #     elsif input == "4"
+  #       list_deals
+  #       # list_deals("LEGO")
+  #     elsif input == "5"
+  #       list_deals
+  #       # list_deals("Walmart")
+  #     else
+  #       puts "Not sure what you want, type list or exit."
+  #     end
+  #   end
+  # end
