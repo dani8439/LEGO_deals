@@ -29,20 +29,25 @@ class LEGODeals::Deal
 
 
   def self.scrape_deals
-    @doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/vendor-Amazon"))
-    @doc.css("section.main").each do |sale|
+    deals = []
+    @doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/vendor-amazon/order-percentdiscount/xml"))
+    @doc.css("tbody").each do |row|
       deal = LEGODeals::Deal.new
-      deal.name = sale.css("td h3 a").text
-      deal.price = sale.css("span.price a").text
-      deal.discount = sale.css("tbody tr td.disc").text
-      deal.original_price = sale.css("span.originalprice a").text.gsub("RRP:", "")
-      deal.pieces = sale.css("td.textcenter span.meta").text.gsub(/[()]/, "").split(",")[0]
-      deal.url = sale.css("h3 a").attribute("href").value
+      deal.name = row.css("h3 a").text
+      deal.price = row.css("span.price a").text
+      deal.discount = row.css("tbody tr td.disc").text
+      deal.original_price = row.css("span.originalprice a").text.gsub("RRP:", "")
+      deal.set_number = row.css("div.hideonmediumscreen.tags a:first").text
+      # deal.theme = row.css("div.hideonmediumscreen.tags a:last").text
+      deal.pieces = row.css("td.textcenter span.meta").text.gsub(/[()]/, "").split(",")
+      deal.url = row.css("h3 a").attribute("href").value
 
 
-      @@all << deal
+
+
+      deals << deal
     end
-    @@all
+    deals
   end
 
   #
