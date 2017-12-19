@@ -17,9 +17,7 @@ class LEGODeals::CLI
     sleep(1)
     @deals = LEGODeals::Deal.today
     @deals.each.with_index(1) do |deal, i|
-      if i.to_i < 30
-        puts "#{i}. #{deal.name} #{deal.price}"
-      end
+      puts "#{i}. #{deal.name} #{deal.price}"
     end
     menu
   end

@@ -30,17 +30,20 @@ class LEGODeals::Deal
 
   def self.scrape_deals
     @doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/vendor-Amazon"))
-    @doc.search("table.neattable").each do |sale|
+    @doc.css("section.main").each do |sale|
       deal = LEGODeals::Deal.new
-      deal.name = sale.search("div.highslide-caption h1").text
-      deal.price = sale.search("span.price a").text
-      deal.discount = sale.search("tbody tr td.disc").text
-      deal.original_price = sale.search("span.originalprice a").text.gsub("RRP:", "")
-      deal.pieces = sale.search("td.textcenter span.meta").text.gsub(/[()]/, "").split(",")[0]
-      # deal.url = sale.search("")
+      deal.name = sale.css("td h3 a").text
+      deal.price = sale.css("span.price a").text
+      deal.discount = sale.css("tbody tr td.disc").text
+      deal.original_price = sale.css("span.originalprice a").text.gsub("RRP:", "")
+      deal.pieces = sale.css("td.textcenter span.meta").text.gsub(/[()]/, "").split(",")[0]
+      deal.url = sale.css("h3 a").attribute("href").value
+
 
       @@all << deal
     end
+    @@all
+  end
 
   #
   #   deals << self.scrape_bricklink
@@ -48,8 +51,7 @@ class LEGODeals::Deal
   # #   # extract the properties
   # #   # instantiate a deal
   #
-    @@all
-  end
+
 
   # def self.scrape_bricklink
   #   doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/xml/vendor-Amazon"))  #{vendor}
