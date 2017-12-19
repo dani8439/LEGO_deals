@@ -1,16 +1,17 @@
 class LEGODeals::Deal
 
-  attr_accessor :name, :price, :theme, :set_number, :discount, :pieces, :availability, :url
+  attr_accessor :name, :price, :theme, :set_number, :discount, :original_price, :pieces, :availability, :url
       # :availability, :url
 
   @@all = []
 
-  def initialize(name = nil, price = nil, theme = nil, set_number = nil, discount = nil, pieces = nil, availability = nil, url = nil)
+  def initialize(name = nil, price = nil, theme = nil, set_number = nil, discount = nil, original_price = nil, pieces = nil, availability = nil, url = nil)
     @name = name
     @price = price
     @theme = theme
     @set_number = set_number
     @discount = discount
+    @original_price = original_price
     @pieces = pieces
     @availability = availability
     @url = url
@@ -28,17 +29,17 @@ class LEGODeals::Deal
 
 
   def self.scrape_deals
-    deals = []
     @doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/vendor-Amazon"))
     @doc.search("table.neattable").each do |sale|
       deal = LEGODeals::Deal.new
       deal.name = sale.search("div.highslide-caption h1").text
       deal.price = sale.search("span.price a").text
-      deal.discount = sale.search("section.main table.neattable tbody tr td.disc").text
-      deal.pieces = sale.search("span.meta").text.gsub(/[()]/, "")
+      deal.discount = sale.search("tbody tr td.disc").text
+      deal.original_price = sale.search("span.originalprice a").text.gsub("RRP:", "")
+      deal.pieces = sale.search("td.textcenter span.meta").text.gsub(/[()]/, "").split(",")[0]
       # deal.url = sale.search("")
 
-      deals << deal
+      @@all << deal
     end
 
   #
@@ -47,7 +48,7 @@ class LEGODeals::Deal
   # #   # extract the properties
   # #   # instantiate a deal
   #
-    deals
+    @@all
   end
 
   # def self.scrape_bricklink
