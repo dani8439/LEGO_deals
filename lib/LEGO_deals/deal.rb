@@ -29,15 +29,14 @@ class LEGODeals::Deal
 
 
   def self.scrape_deals
-    deals = []
     @doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/vendor-amazon/order-percentdiscount/xml"))
-    @doc.css("tbody").each do |row|
+    @doc.css("table.neattable").each do |row|
       deal = LEGODeals::Deal.new
-      deal.name = row.css("h3 a").text
+      deal.name = row.css("div.highslide-caption h1").text
       deal.price = row.css("span.price a").text
       deal.discount = row.css("tbody tr td.disc").text
       deal.original_price = row.css("span.originalprice a").text.gsub("RRP:", "")
-      deal.set_number = row.css("div.hideonmediumscreen.tags a:first").text
+      deal.set_number = row.css("div.hideonmediumscreen.tags a:first").text.split("-")
       # deal.theme = row.css("div.hideonmediumscreen.tags a:last").text
       deal.pieces = row.css("td.textcenter span.meta").text.gsub(/[()]/, "").split(",")
       deal.url = row.css("h3 a").attribute("href").value
@@ -45,9 +44,9 @@ class LEGODeals::Deal
 
 
 
-      deals << deal
+      @@all << deal
     end
-    deals
+    @@all
   end
 
   #
