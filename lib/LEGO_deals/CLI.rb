@@ -1,6 +1,7 @@
 class LEGODeals::CLI
 
   def call
+    welcome
     # list_vendors
     # menu_1
     list_deals
@@ -8,16 +9,19 @@ class LEGODeals::CLI
     goodbye
   end
 
-
-  def list_deals
-    puts "Welcome to LEGO Deals!"
+  def welcome
+    puts        "Welcome to LEGO Deals!"
     sleep(1)
     puts "Here are today's Biggest Discounts:"
     puts "-----------------------------------"
     sleep(1)
+  end
+
+  def list_deals
     @deals = LEGODeals::Deal.today
     @deals.each.with_index(1) do |deal, i|
       puts "#{i}. #{deal.name} #{deal.price}"
+      puts ""
     end
     menu
   end
@@ -31,7 +35,8 @@ class LEGODeals::CLI
 
       if input.to_i > 0 && input.to_i < 25
         the_deal = @deals[input.to_i-1]
-        # puts "#{the_deal.name} - #{the_deal.price} - #{the_deal.pieces} - #{the_deal.availability}"
+        puts "#{the_deal.name} - #{the_deal.price} - #{the_deal.original_price} - #{the_deal.discount}"
+        puts "#{the_deal.set_number} - #{the_deal.theme} - #{the_deal.pieces} - #{the_deal.url}"
       elsif input == "list"
         list_deals
       else

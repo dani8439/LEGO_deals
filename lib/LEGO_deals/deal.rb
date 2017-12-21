@@ -1,11 +1,11 @@
 class LEGODeals::Deal
 
-  attr_accessor :name, :price, :theme, :set_number, :discount, :original_price, :pieces, :availability, :url
+  attr_accessor :name, :price, :theme, :set_number, :discount, :original_price, :pieces, :availability, :url, :vendor
       # :availability, :url
 
   @@all = []
 
-  def initialize(name = nil, price = nil, theme = nil, set_number = nil, discount = nil, original_price = nil, pieces = nil, availability = nil, url = nil)
+  def initialize(name = nil, price = nil, theme = nil, set_number = nil, discount = nil, original_price = nil, pieces = nil, availability = nil, url = nil, vendor = nil)
     @name = name
     @price = price
     @theme = theme
@@ -15,6 +15,7 @@ class LEGODeals::Deal
     @pieces = pieces
     @availability = availability
     @url = url
+    @vendor = vendor
     @@all << self
   end
 
@@ -40,6 +41,7 @@ class LEGODeals::Deal
       # deal.theme = row.css("div.hideonmediumscreen.tags a:last").text
       deal.pieces = row.css("td.textcenter span.meta").text.gsub(/[()]/, "").split(",")
       deal.url = row.css("h3 a").attribute("href").value
+      # deal.vendor = row.css("td.vendor a img[alt='Amazon']").text
 
 
 

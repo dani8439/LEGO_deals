@@ -18,5 +18,5 @@ A deal has a name
 A deal has a price
 A deal has a discount
 A deal has a url
-A deal has an availability? (or is it automatically avaiable as Bricklink would not list it?)
+A deal has an availability? (or is it automatically available as Bricklink would not list it otherwise?)
 A deal also has a vendor?
