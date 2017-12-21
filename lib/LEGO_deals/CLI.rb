@@ -39,6 +39,8 @@ class LEGODeals::CLI
         puts "#{the_deal.set_number} - #{the_deal.theme} - #{the_deal.pieces} - #{the_deal.url}"
       elsif input == "list"
         list_deals
+      # elsif input == "exit"
+      #   puts "Goodbye!"
       else
         puts "Not sure what you want, type list or exit."
       end
