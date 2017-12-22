@@ -10,7 +10,7 @@ class LEGODeals::Deal
   end
 
   def self.all
-    @@all.uniq[0..14]
+    @@all.uniq[0..24]
   end
 
   def self.today
@@ -28,26 +28,12 @@ class LEGODeals::Deal
       deal.original_price = row.css("span.originalprice a").text.gsub("RRP:", "")
       deal.set_number = row.css("div.hideonmediumscreen.tags a:first").text
       deal.year_released = row.css("div.hideonmediumscreen.tags a:last").text
-      # deal.theme = row.css("div.hideonmediumscreen.tags a:second").text
+      deal.theme = row.css("div.hideonmediumscreen.tags a:nth-child(2)").text
       deal.pieces = row.css("td.textcenter span.meta").text.gsub(/[()]/, "")
       deal.url = row.css("h3 a").attribute("href").value
-      # deal.vendor = row.css("td.vendor a img[alt='Amazon']").text
 
       @@all << deal
     end
     @@all
   end
 end
-
-
-
-
-  # def self.scrape_bricklink
-  #   doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/xml/vendor-Amazon"))  #{vendor}
-  #   name = doc.search("h3 a").text,
-  #   price = doc.search("span.price a").text
-  #   discount = doc.search("td.disc").text
-  #   # pieces = doc.search("span.meta").text
-  #   # availability = doc.search("span.meta.block").text
-  #   # url = doc.search("h3 a").first.attr("href")
-  # end

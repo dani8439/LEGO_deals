@@ -11,7 +11,7 @@ class LEGODeals::CLI
   def welcome
     puts "Welcome to LEGO Deals!"
     sleep(1)
-    puts "Here are today's Biggest Discounts:"
+    puts "Here are the current biggest discounts:"
     puts "-----------------------------------"
     sleep(1)
   end
@@ -19,7 +19,7 @@ class LEGODeals::CLI
   def list_deals
     @deals = LEGODeals::Deal.all
     @deals.each.with_index(1) do |deal, i|
-      puts "#{i}. #{deal.name} #{deal.price}"
+      puts "#{i}. #{deal.name} - #{deal.theme} - #{deal.price}"
     end
     menu
   end
@@ -37,7 +37,7 @@ class LEGODeals::CLI
         the_deal = @deals[input.to_i-1]
         puts ""
         puts "#{the_deal.name} - Sale Price: #{the_deal.price} - Original Price:#{the_deal.original_price} - Discount of #{the_deal.discount}"
-        puts "Set Number: #{the_deal.set_number} - Year Released: #{the_deal.year_released} - Pieces & Price Per Piece: #{the_deal.pieces}"
+        puts "Set Number: #{the_deal.set_number} - Set Theme: #{the_deal.theme} - Year Released: #{the_deal.year_released} - Pieces & Price Per Piece: #{the_deal.pieces}"
         puts "Link: #{the_deal.url}"
         puts ""
       elsif input == "list"
