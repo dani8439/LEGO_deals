@@ -1,7 +1,7 @@
 class LEGODeals::Deal
 
-  attr_accessor :name, :price, :theme, :set_number, :year_released, :discount, :original_price, :pieces, :availability, :url, :vendor
-      # :availability, :url
+  attr_accessor :vendor, :name, :price, :theme, :set_number, :year_released, :discount, :original_price, :pieces, :availability, :url
+  # :vendor ?
 
   @@all = []
 
@@ -18,7 +18,7 @@ class LEGODeals::Deal
   end
 
 
-  def self.scrape_deals
+  def self.scrape_deals(@vendor)
     @doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/vendor-amazon/order-percentdiscount/xml"))
     @doc.css("table.neattable tbody tr").each do |row|
       deal = LEGODeals::Deal.new
@@ -28,10 +28,8 @@ class LEGODeals::Deal
       deal.original_price = row.css("span.originalprice a").text.gsub("RRP:", "")
       deal.set_number = row.css("div.hideonmediumscreen.tags a:first").text
       deal.year_released = row.css("div.hideonmediumscreen.tags a:last").text
-      # deal.theme = row.css("div.hideonmediumscreen.tags a:second").text
       deal.pieces = row.css("td.textcenter span.meta").text.gsub(/[()]/, "")
       deal.url = row.css("h3 a").attribute("href").value
-      # deal.vendor = row.css("td.vendor a img[alt='Amazon']").text
 
       @@all << deal
     end
