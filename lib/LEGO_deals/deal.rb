@@ -5,22 +5,12 @@ class LEGODeals::Deal
 
   @@all = []
 
-  def initialize(name = nil, price = nil, theme = nil, set_number = nil, discount = nil, original_price = nil, pieces = nil, availability = nil, url = nil, vendor = nil)
-    @name = name
-    @price = price
-    @theme = theme
-    @set_number = set_number
-    @discount = discount
-    @original_price = original_price
-    @pieces = pieces
-    @availability = availability
-    @url = url
-    @vendor = vendor
+  def initialize
     @@all << self
   end
 
   def self.all
-    @@all
+    @@all.uniq[0..24]
   end
 
   def self.today
@@ -31,11 +21,11 @@ class LEGODeals::Deal
 
   def self.scrape_deals
     @doc = Nokogiri::HTML(open("https://brickset.com/buy/country-us/vendor-amazon/order-percentdiscount/xml"))
-    @doc.css("table.neattable").each do |row|
+    @doc.css("table.neattable tbody tr").each do |row|
       deal = LEGODeals::Deal.new
       deal.name = row.css("div.highslide-caption h1").text.strip
       deal.price = row.css("span.price a").text
-      deal.discount = row.css("tbody tr td.disc").text
+      deal.discount = row.css("td.disc").text
       deal.original_price = row.css("span.originalprice a").text.gsub("RRP:", "")
       deal.set_number = row.css("div.hideonmediumscreen.tags a:first").text.split("-")
       # deal.theme = row.css("div.hideonmediumscreen.tags a:last").text
