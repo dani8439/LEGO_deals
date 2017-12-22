@@ -10,7 +10,7 @@ class LEGODeals::Deal
   end
 
   def self.all
-    @@all.uniq[0..24]
+    @@all.uniq[0..14]
   end
 
   def self.today

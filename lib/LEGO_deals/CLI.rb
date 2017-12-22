@@ -11,7 +11,7 @@ class LEGODeals::CLI
   def welcome
     puts "Welcome to LEGO Deals!"
     sleep(1)
-    puts "Here are the current biggest discounts:"
+    puts "Here are the biggest discounts currently on Amazon:"
     puts "-----------------------------------"
     sleep(1)
   end
@@ -33,7 +33,7 @@ class LEGODeals::CLI
       puts ""
       input = gets.strip.downcase
 
-      if input.to_i > 0 && input.to_i < 26
+      if input.to_i > 0 && input.to_i < 15
         the_deal = @deals[input.to_i-1]
         puts ""
         puts "#{the_deal.name} - Sale Price: #{the_deal.price} - Original Price:#{the_deal.original_price} - Discount of #{the_deal.discount}"
@@ -43,7 +43,7 @@ class LEGODeals::CLI
       elsif input == "list"
         list_deals
       elsif input == "exit"
-        puts "Goodbye!"
+        goodbye
         exit
       else
         puts "Not sure what you want, type list or exit."
@@ -52,7 +52,8 @@ class LEGODeals::CLI
   end
 
   def goodbye
-    puts "See you tomorrow for more deals!"
+    puts "Goodbye!"
+    puts "See you later for more deals!"
   end
 end
 
