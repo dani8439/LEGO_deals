@@ -1,8 +1,7 @@
 # LEGODeals
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/LEGO_deals`. To experiment with that code, run `bin/console` for an interactive prompt.
+Welcome to LEGO Deals! An interactive Ruby Gem that scrapes the top sales at Bricklink.com.
 
-TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
@@ -22,7 +21,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Select which set number you are most interested in learning more information about.
 
 ## Development
 
@@ -37,7 +36,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/'dani8
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-## Code of Conduct
-
-Everyone interacting in the LEGODeals project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/'dani8439-63233'/LEGO_deals/blob/master/CODE_OF_CONDUCT.md).
