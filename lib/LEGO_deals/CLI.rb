@@ -20,7 +20,6 @@ class LEGODeals::CLI
     @deals = LEGODeals::Deal.all
     @deals.each.with_index(1) do |deal, i|
       puts "#{i}. #{deal.name} #{deal.price}"
-      puts ""
     end
     menu
   end
@@ -29,13 +28,18 @@ class LEGODeals::CLI
   def menu
     input = nil
     while input != "exit"
+      puts ""
       puts "Enter the number of the item you would like more info on, or type list to see the deals again, or exit:"
+      puts ""
       input = gets.strip.downcase
 
-      if input.to_i > 0 && input.to_i < 25
+      if input.to_i > 0 && input.to_i < 26
         the_deal = @deals[input.to_i-1]
-        puts "#{the_deal.name} - #{the_deal.price} - #{the_deal.original_price} - #{the_deal.discount}"
-        puts "#{the_deal.set_number} - #{the_deal.theme} - #{the_deal.pieces} - #{the_deal.url}"
+        puts ""
+        puts "#{the_deal.name} - Sale Price: #{the_deal.price} - Original Price:#{the_deal.original_price} - Discount of #{the_deal.discount}"
+        puts "Set Number: #{the_deal.set_number} - Year Released: #{the_deal.year_released} - Pieces & Price Per Piece: #{the_deal.pieces}"
+        puts "Link: #{the_deal.url}"
+        puts ""
       elsif input == "list"
         list_deals
       elsif input == "exit"

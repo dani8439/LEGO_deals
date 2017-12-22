@@ -1,6 +1,6 @@
 class LEGODeals::Deal
 
-  attr_accessor :name, :price, :theme, :set_number, :discount, :original_price, :pieces, :availability, :url, :vendor
+  attr_accessor :name, :price, :theme, :set_number, :year_released, :discount, :original_price, :pieces, :availability, :url, :vendor
       # :availability, :url
 
   @@all = []
@@ -10,11 +10,10 @@ class LEGODeals::Deal
   end
 
   def self.all
-    @@all.uniq[0..24]
+    @@all.uniq[0..14]
   end
 
   def self.today
-    #Scrape Bricklink and then return deals based on that data
     self.scrape_deals
   end
 
@@ -27,9 +26,10 @@ class LEGODeals::Deal
       deal.price = row.css("span.price a").text
       deal.discount = row.css("td.disc").text
       deal.original_price = row.css("span.originalprice a").text.gsub("RRP:", "")
-      deal.set_number = row.css("div.hideonmediumscreen.tags a:first").text.split("-")
-      # deal.theme = row.css("div.hideonmediumscreen.tags a:last").text
-      deal.pieces = row.css("td.textcenter span.meta").text.gsub(/[()]/, "").split(",")
+      deal.set_number = row.css("div.hideonmediumscreen.tags a:first").text
+      deal.year_released = row.css("div.hideonmediumscreen.tags a:last").text
+      # deal.theme = row.css("div.hideonmediumscreen.tags a:second").text
+      deal.pieces = row.css("td.textcenter span.meta").text.gsub(/[()]/, "")
       deal.url = row.css("h3 a").attribute("href").value
       # deal.vendor = row.css("td.vendor a img[alt='Amazon']").text
 
