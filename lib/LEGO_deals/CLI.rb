@@ -2,55 +2,18 @@ class LEGODeals::CLI
 
   def call
     welcome
-    list_vendors
-    menu_1
     LEGODeals::Deal.today
     list_deals
-    menu_2
+    menu
     goodbye
   end
 
   def welcome
     puts "Welcome to LEGO Deals!"
     sleep(1)
-    puts "Please choose a vendor to discover today's biggest discounts:"
     puts "Here are today's Biggest Discounts:"
     puts "-----------------------------------"
     sleep(1)
-  end
-
-  def list_vendors
-    vendors = ["Amazon", "Bricklink", "Chowren Toys", "LEGO Shop", "Walmart"]
-    vendors.each.with_index(1) do |store, i|
-      puts "#{i}. #{store}"
-    end
-  end
-
-  def menu_1
-    input = nil
-    puts ""
-    puts "Please enter the number of the vendor you would like today's deals from:"
-    input = gets.strip.downcase
-
-    case input
-    when input == "1"
-      list_deals("Amazon")
-    when input == "2"
-      list_deals("Bricklink")
-    when input == "3"
-      list_deals("Chowren Toys")
-    when input == "4"
-      list_deals("LEGO")
-    when input == "5"
-      list_deals("Walmart")
-    when input == "list"
-      list_vendors
-    when input == "exit"
-      puts "Goodbye!"
-      exit
-    else
-      "Not sure what you want, type list to see vendors again, or exit"
-    end
   end
 
   def list_deals
@@ -62,7 +25,7 @@ class LEGODeals::CLI
   end
 
 
-  def menu_2
+  def menu
     input = nil
     while input != "exit"
       puts ""
@@ -94,7 +57,13 @@ class LEGODeals::CLI
 end
 
 
-
+  # def list_vendors
+  #   vendors = ["Amazon", "Bricklink", "Chowren Toys", "LEGO Shop", "Walmart"]
+  #   puts "Welcome to LEGO Deals!"
+  #   vendors.each.with_index(1) do |store, i|
+  #     puts "#{i}. #{store}"
+  #   end
+  # end
 
   # def menu_1
   #   input = nil
