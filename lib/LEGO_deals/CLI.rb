@@ -2,7 +2,7 @@ class LEGODeals::CLI
 
   def call
     welcome
-    LEGODeals::Deal.today
+    LEGODeals::Scraper.scrape_deals
     list_deals
     menu
     goodbye
@@ -33,7 +33,7 @@ class LEGODeals::CLI
       puts ""
       input = gets.strip.downcase
 
-      if input.to_i > 0 && input.to_i < 15
+      if input.to_i.between?(1, 20)    #input.to_i > 0 && input.to_i < 15
         the_deal = @deals[input.to_i-1]
         puts ""
         puts "#{the_deal.name} - Sale Price: #{the_deal.price} - Original Price:#{the_deal.original_price} - Discount of #{the_deal.discount}"
@@ -56,39 +56,3 @@ class LEGODeals::CLI
     puts "See you later for more deals!"
   end
 end
-
-
-  # def list_vendors
-  #   vendors = ["Amazon", "Bricklink", "Chowren Toys", "LEGO Shop", "Walmart"]
-  #   puts "Welcome to LEGO Deals!"
-  #   vendors.each.with_index(1) do |store, i|
-  #     puts "#{i}. #{store}"
-  #   end
-  # end
-
-  # def menu_1
-  #   input = nil
-  #   while input != "exit"
-  #     puts "Please choose a vendor from the list:"
-  #     input = gets.strip.downcase
-  #
-  #     if input == "1"
-  #       list_deals
-  #       # list_deals("Amazon")?
-  #     elsif input == "2"
-  #       list_deals
-  #       # list_deals("Bricklink")
-  #     elsif input == "3"
-  #       list_deals
-  #       # list_deals("Chowren Toys")
-  #     elsif input == "4"
-  #       list_deals
-  #       # list_deals("LEGO")
-  #     elsif input == "5"
-  #       list_deals
-  #       # list_deals("Walmart")
-  #     else
-  #       puts "Not sure what you want, type list or exit."
-  #     end
-  #   end
-  # end
