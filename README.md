@@ -1,6 +1,6 @@
 # LEGO Deals 🧱
 
-Welcome to LEGO Deals! An interactive Ruby Gem that scrapes the top sales of the day from Bricklink.com.
+Welcome to LEGO Deals! An interactive Ruby Gem that scrapes the top sales of the day from [Bricklink.com](https://www.bricklink.com/v2/main.page).
 
 
 ## Installation
